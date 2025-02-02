@@ -12,6 +12,12 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 
+import os
+import dj_database_url
+from dotenv import load_dotenv
+
+load_dotenv()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -58,17 +64,14 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mydb',
-        'USER':'root',
-        'PASSWORD':'Anynomous',
-        'HOST':'127.0.0.1',
-        'PORT':'3306'
-    }
+    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
 }
 
+# Set time zone to UTC
+TIME_ZONE = 'UTC'
+USE_TZ = True
 
 ROOT_URLCONF = 'management.urls'
 
